@@ -76,7 +76,7 @@ describe('unwrap-range', function () {
     assert.equal('hello world', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting first 2 chars within a <b> element', function () {
+  it('should unwrap a Range selecting the first 2 chars within a <b> element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
@@ -93,6 +93,44 @@ describe('unwrap-range', function () {
 
     // test that there's no more <b> element in the <div>
     assert.equal('he<b>llo worl</b>d', div.innerHTML);
+  });
+
+  it('should unwrap a Range selecting the middle 2 chars within a <b> element', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<b>hello worl</b>d';
+    document.body.appendChild(div);
+
+    var b = div.firstChild;
+    var range = document.createRange();
+    range.setStart(b.firstChild, 2);
+    range.setEnd(b.firstChild, 4);
+
+    // test that the Range is properly set up
+    assert.equal('ll', range.toString());
+
+    unwrap(range, 'b');
+
+    // test that there's no more <b> element in the <div>
+    assert.equal('<b>he</b>ll<b>o worl</b>d', div.innerHTML);
+  });
+
+  it('should unwrap a Range selecting the last 2 chars within a <b> element', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<b>hello worl</b>d';
+    document.body.appendChild(div);
+
+    var b = div.firstChild;
+    var range = document.createRange();
+    range.setStart(b.firstChild, b.firstChild.length - 2);
+    range.setEnd(b.firstChild, b.firstChild.length);
+
+    // test that the Range is properly set up
+    assert.equal('rl', range.toString());
+
+    unwrap(range, 'b');
+
+    // test that there's no more <b> element in the <div>
+    assert.equal('<b>hello wo</b>rld', div.innerHTML);
   });
 
 });

@@ -30,10 +30,12 @@
   },
   "homepage": "https://github.com/webmodules/unwrap-range",
   "dependencies": {
-    "component-query": "0.0.3",
     "component-closest": "~0.1.4",
+    "component-query": "0.0.3",
     "debug": "~1.0.4",
+    "find-within": "0.0.1",
     "get-document": "~0.1.1",
-    "unwrap-node": "0.0.1"
+    "unwrap-node": "0.0.1",
+    "wrap-range": "0.0.2"
   }
 }
