@@ -1,0 +1,39 @@
+{
+  "name": "unwrap-range",
+  "version": "0.0.0",
+  "description": "Removes the specified `nodeName` from within our surrounding the given Range",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webmodules/unwrap-range.git"
+  },
+  "keywords": [
+    "unwrap",
+    "range",
+    "dom",
+    "element",
+    "browser",
+    "node",
+    "nodeName",
+    "remove"
+  ],
+  "author": "Nathan Rajlich <nathan@tootallnate.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webmodules/unwrap-range/issues"
+  },
+  "homepage": "https://github.com/webmodules/unwrap-range",
+  "dependencies": {
+    "component-query": "0.0.3",
+    "component-closest": "~0.1.4",
+    "debug": "~1.0.4",
+    "get-document": "~0.1.1",
+    "unwrap-node": "0.0.1"
+  }
+}
