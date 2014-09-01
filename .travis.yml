@@ -4,7 +4,7 @@ node_js:
 env:
   global:
   - secure: X/58ymssjEDWDOBmLFaiCLKpPef3SKKaaep5yMkCDq8OZfkKE55er1DObOLnOQ6RMg7Ji/93KHse1mnX/n0ZfFeNnFsFcSCofgyD/57LFpGleT3s6hfuCjNcRHsvpw3zJxzOBt2vaNuF++Q9jtZxxYZuX7XRPOEv9Bgo5bmuBYQ=
-  - secure: TZNFkURCH4gknfdTHfx0utVp7vhtCZp8J+SIeCeHP1qPl2GjkeJaF9tOrnyZIX6NYdEtdlGAczpa3jEOEttGJnUpHIFrgU6+0YPBUKgKBy2ytPwMbbldomzpgiOzMpK5awF27EsQiLPJVCTsJoHs5bL9p3n7f7FfhHKZRYfA2IA=
+  - secure: E/KHBdosjlT8rLT3H+BFQzuCLumn0TyNOOOYTn09WhWvSpTQLUGpU4ZsgPS6h2KKT3u7Auwn9xZGbhDVwH9/duRpwOFNfuAXuL1fml0CyIf60VjbhWAqDt9xh0zOdH1db8s18ja0Yha+cJ1ciWiwcdxSeaT8mGdZpZ4udcCzYyo=
   matrix:
   - BROWSER_NAME=chrome BROWSER_VERSION=latest
   - BROWSER_NAME=chrome BROWSER_VERSION=29
