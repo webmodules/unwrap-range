@@ -32,6 +32,7 @@
     "debug": "~1.0.4",
     "find-within": "0.0.1",
     "get-document": "~0.1.1",
+    "range-insert-node": "0.0.2",
     "unwrap-node": "0.0.1",
     "wrap-range": "0.0.2"
   },

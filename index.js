@@ -6,6 +6,7 @@
 var findWithin = require('find-within');
 var getDocument = require('get-document');
 var unwrapNode = require('unwrap-node');
+var insertNode = require('range-insert-node');
 var wrapRange = require('wrap-range');
 var closest = require('component-closest');
 var query = require('component-query');
@@ -80,7 +81,7 @@ function unwrap (range, nodeName, root, doc) {
   for (var i = 0; i < nodes.length; i++) {
     unwrapNode(nodes[i], null, doc);
   }
-  range.insertNode(fragment);
+  insertNode(range, fragment);
   range.selectNodeContents(fragment);
   fragment = null;
 }
