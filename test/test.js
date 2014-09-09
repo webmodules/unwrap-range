@@ -24,14 +24,44 @@ describe('unwrap-range', function () {
 
     var b = div.firstChild;
     var range = document.createRange();
-    range.selectNodeContents(b);
+    range.selectNode(b);
+    assert.equal('hello worl', range.toString());
+
+    unwrap(range, 'b');
+
+    // test that there's no more B element in the DIV
+    assert.equal('hello world', div.innerHTML);
+
+    assert.equal('hello worl', range.toString());
+    assert(range.startContainer === div);
+    assert(range.startOffset === 0);
+    assert(range.endContainer === div);
+    assert(range.endOffset === 1);
+  });
+
+  it('should unwrap a Range selecting text within a B element', function () {
+    div = document.createElement('div');
+    div.innerHTML = 'h<b>ello worl</b>d';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.childNodes[1].firstChild, 0);
+    range.setEnd(div.childNodes[1].firstChild, 9);
+    assert.equal('ello worl', range.toString());
 
     unwrap(range, 'b');
 
     // test that there's no more <b> element in the <div>
     assert.equal('hello world', div.innerHTML);
+
+    assert.equal('ello worl', range.toString());
+    assert(range.startContainer === div.childNodes[1]);
+    assert(range.startOffset === 0);
+    assert(range.endContainer === div.childNodes[1]);
+    assert(range.endOffset === 9);
   });
 
+  /*
   it('should unwrap a Range selecting multiple B elements', function () {
     div = document.createElement('div');
     div.innerHTML = 'h<b>e</b>l<i>l</i>o <b>w</b>or<i>l</i>d';
@@ -133,5 +163,6 @@ describe('unwrap-range', function () {
     // test that there's no more <b> element in the <div>
     assert.equal('<b>hello wo</b>rld', div.innerHTML);
   });
+  */
 
 });

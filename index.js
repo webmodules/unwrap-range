@@ -10,6 +10,8 @@ var insertNode = require('range-insert-node');
 var wrapRange = require('wrap-range');
 var closest = require('component-closest');
 var query = require('component-query');
+var toArray = require('to-array');
+var FrozenRange = require('frozen-range');
 var debug = require('debug')('unwrap-range');
 
 /**
@@ -28,50 +30,51 @@ module.exports = unwrap;
  */
 
 function unwrap (range, nodeName, root, doc) {
+  var fr;
+  var index;
   if (!doc) doc = getDocument(range) || document;
-
-  var startLeft = findWithin(range.startContainer, Node.TEXT_NODE, true);
-  var startLeftOffset = range.startContainer.nodeType === Node.TEXT_NODE ? range.startOffset : 0;
-  var startRight = findWithin(range.endContainer, Node.TEXT_NODE, false);
-  var startRightOffset = range.startContainer.nodeType === Node.TEXT_NODE ? range.endOffset : startRight.nodeValue.length;
 
   // check common ancestor container for `nodeName`
   var node = closest(range.commonAncestorContainer, nodeName, true, root);
   if (node) {
     debug('found %o common ancestor element: %o', nodeName, node);
 
-    var outer = unwrapNode(node, null, doc);
-    var r = doc.createRange();
+    fr = new FrozenRange(range, node);
 
-    var left = findWithin(outer.startContainer, Node.TEXT_NODE, true);
-    var leftOffset = outer.startContainer.nodeType === Node.TEXT_NODE ? outer.startOffset : 0;
+    var parent = node.parentNode;
+    index = toArray(parent.childNodes).indexOf(node);
 
-    if (left !== startLeft || leftOffset !== startLeftOffset) {
-      debug('need to re-wrap left-hand side');
-      r.setStart(left, leftOffset);
-      r.setEnd(startLeft, startLeftOffset);
-      var l = wrapRange(r, nodeName);
-    }
+    var outer = unwrapNode(node, parent, doc);
 
-    var right = findWithin(outer.endContainer, Node.TEXT_NODE, false);
-    var rightOffset = outer.endContainer.nodeType === Node.TEXT_NODE ? outer.endOffset : right.nodeValue.length;
+    // a little bit hacky (but not really) but we need to replace the top-most
+    // element's childNode offsets since we're unwrapping the Node into another
+    // node which may or may not have other elements before/after this one.
+    fr.startPath[0] = index;
+    fr.endPath[0] = index;
 
-    if (right !== startRight || rightOffset !== startRightOffset) {
-      debug('need to re-wrap right-hand side');
-      r.setStart(startRight, startRightOffset);
-      r.setEnd(right, rightOffset);
-      var ri = wrapRange(r, nodeName);
-    }
+    fr.thaw(parent, range);
   }
+
+  var common = range.commonAncestorContainer;
+  index = toArray(common.parentNode.childNodes).indexOf(common);
+  fr = new FrozenRange(range, common);
 
   // check inner nodes
   var fragment = range.extractContents();
   var nodes = query.all(nodeName, fragment);
   debug('%o %o elements to "unwrap"', nodes.length, nodeName);
-  for (var i = 0; i < nodes.length; i++) {
-    unwrapNode(nodes[i], null, doc);
+  if (nodes.length) {
+    for (var i = 0; i < nodes.length; i++) {
+      unwrapNode(nodes[i], null, doc);
+    }
+    insertNode(range, fragment);
+  } else {
+    insertNode(range, fragment);
+
+    fr.startPath.push(index);
+    fr.endPath.push(index);
+
+    fr.thaw(range.commonAncestorContainer, range);
   }
-  insertNode(range, fragment);
-  range.selectNodeContents(fragment);
   fragment = null;
 }
