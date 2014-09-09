@@ -1,7 +1,10 @@
 
+/**
+ * Module dependencies.
+ */
+
 var assert = require('assert');
 var unwrap = require('../');
-
 
 describe('unwrap-range', function () {
   var div;
@@ -21,7 +24,7 @@ describe('unwrap-range', function () {
 
     var b = div.firstChild;
     var range = document.createRange();
-    range.selectNode(b);
+    range.selectNodeContents(b);
 
     unwrap(range, 'b');
 
@@ -81,10 +84,9 @@ describe('unwrap-range', function () {
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
 
-    var b = div.firstChild;
     var range = document.createRange();
-    range.setStart(b.firstChild, 0);
-    range.setEnd(b.firstChild, 2);
+    range.setStart(div.firstChild.firstChild, 0);
+    range.setEnd(div.firstChild.firstChild, 2);
 
     // test that the Range is properly set up
     assert.equal('he', range.toString());
@@ -100,10 +102,9 @@ describe('unwrap-range', function () {
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
 
-    var b = div.firstChild;
     var range = document.createRange();
-    range.setStart(b.firstChild, 2);
-    range.setEnd(b.firstChild, 4);
+    range.setStart(div.firstChild.firstChild, 2);
+    range.setEnd(div.firstChild.firstChild, 4);
 
     // test that the Range is properly set up
     assert.equal('ll', range.toString());
