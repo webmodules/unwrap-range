@@ -14,7 +14,7 @@ describe('unwrap-range', function () {
     }
   });
 
-  it('should unwrap a Range selecting a <b> element', function () {
+  it('should unwrap a Range selecting a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
@@ -29,7 +29,7 @@ describe('unwrap-range', function () {
     assert.equal('hello world', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting multiple <b> elements', function () {
+  it('should unwrap a Range selecting multiple B elements', function () {
     div = document.createElement('div');
     div.innerHTML = 'h<b>e</b>l<i>l</i>o <b>w</b>or<i>l</i>d';
     document.body.appendChild(div);
@@ -45,7 +45,7 @@ describe('unwrap-range', function () {
     assert.equal('hel<i>l</i>o wor<i>l</i>d', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting part of a <b> element', function () {
+  it('should unwrap a Range selecting part of a B element', function () {
     div = document.createElement('div');
     div.innerHTML = 'he<b>ll</b>o';
     document.body.appendChild(div);
@@ -61,7 +61,7 @@ describe('unwrap-range', function () {
     assert.equal('hel<b>l</b>o', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting all text within a <b> element', function () {
+  it('should unwrap a Range selecting all text within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
@@ -76,7 +76,7 @@ describe('unwrap-range', function () {
     assert.equal('hello world', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting the first 2 chars within a <b> element', function () {
+  it('should unwrap a Range selecting the first 2 chars within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
@@ -95,7 +95,7 @@ describe('unwrap-range', function () {
     assert.equal('he<b>llo worl</b>d', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting the middle 2 chars within a <b> element', function () {
+  it('should unwrap a Range selecting the middle 2 chars within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
@@ -114,7 +114,7 @@ describe('unwrap-range', function () {
     assert.equal('<b>he</b>ll<b>o worl</b>d', div.innerHTML);
   });
 
-  it('should unwrap a Range selecting the last 2 chars within a <b> element', function () {
+  it('should unwrap a Range selecting the last 2 chars within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
     document.body.appendChild(div);
