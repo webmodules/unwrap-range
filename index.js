@@ -41,6 +41,7 @@ function unwrap (range, nodeName, root, doc) {
     info = saveRange.save(range, doc);
 
     var outer = unwrapNode(node, null, doc);
+    // TODO: re-wrap left/right hand sides, when necessary
 
     range = saveRange.load(info, range.commonAncestorContainer);
   }
