@@ -32,11 +32,12 @@ describe('unwrap-range', function () {
     // test that there's no more B element in the DIV
     assert.equal('hello world', div.innerHTML);
 
+    // test that the Range is still intact
     assert.equal('hello worl', range.toString());
-    assert(range.startContainer === div);
+    assert(range.startContainer === div.firstChild);
     assert(range.startOffset === 0);
-    assert(range.endContainer === div);
-    assert(range.endOffset === 1);
+    assert(range.endContainer === div.firstChild);
+    assert(range.endOffset === 10);
   });
 
   it('should unwrap a Range selecting text within a B element', function () {
@@ -54,6 +55,7 @@ describe('unwrap-range', function () {
     // test that there's no more <b> element in the <div>
     assert.equal('hello world', div.innerHTML);
 
+    // test that the Range is still intact
     assert.equal('ello worl', range.toString());
     assert(range.startContainer === div.childNodes[1]);
     assert(range.startOffset === 0);
@@ -61,7 +63,6 @@ describe('unwrap-range', function () {
     assert(range.endOffset === 9);
   });
 
-  /*
   it('should unwrap a Range selecting multiple B elements', function () {
     div = document.createElement('div');
     div.innerHTML = 'h<b>e</b>l<i>l</i>o <b>w</b>or<i>l</i>d';
@@ -71,11 +72,19 @@ describe('unwrap-range', function () {
     var range = document.createRange();
     range.setStart(div.firstChild, 0);
     range.setEnd(div.lastChild, div.lastChild.nodeValue.length);
+    assert.equal('hello world', range.toString());
 
     unwrap(range, 'b');
 
     // test that there's no more <b> elements in the <div>
     assert.equal('hel<i>l</i>o wor<i>l</i>d', div.innerHTML);
+
+    // test that the Range is still intact
+    assert.equal('hello world', range.toString());
+    assert(range.startContainer === div.firstChild);
+    assert(range.startOffset === 0);
+    assert(range.endContainer === div.lastChild);
+    assert(range.endOffset === div.lastChild.nodeValue.length);
   });
 
   it('should unwrap a Range selecting part of a B element', function () {
@@ -87,11 +96,15 @@ describe('unwrap-range', function () {
     var range = document.createRange();
     range.setStart(div.firstChild, 1);
     range.setEnd(div.childNodes[1].firstChild, 1);
+    assert.equal('el', range.toString());
 
     unwrap(range, 'b');
 
     // test that there's a <b> only around the second "l"
     assert.equal('hel<b>l</b>o', div.innerHTML);
+
+    // test that the Range is still intact
+    assert.equal('el', range.toString());
   });
 
   it('should unwrap a Range selecting all text within a B element', function () {
@@ -102,13 +115,18 @@ describe('unwrap-range', function () {
     var b = div.firstChild;
     var range = document.createRange();
     range.selectNodeContents(b);
+    assert.equal('hello worl', range.toString());
 
     unwrap(range, 'b');
 
     // test that there's no more <b> element in the <div>
     assert.equal('hello world', div.innerHTML);
+
+    // test that the Range is still intact
+    assert.equal('hello worl', range.toString());
   });
 
+  /*
   it('should unwrap a Range selecting the first 2 chars within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
