@@ -10,7 +10,6 @@ var insertNode = require('range-insert-node');
 var wrapRange = require('wrap-range');
 var closest = require('component-closest');
 var query = require('component-query');
-var toArray = require('to-array');
 var saveRange = require('save-range');
 var normalize = require('range-normalize');
 var debug = require('debug')('unwrap-range');
@@ -31,8 +30,7 @@ module.exports = unwrap;
  */
 
 function unwrap (range, nodeName, root, doc) {
-  var fr;
-  var index;
+  var info;
   if (!doc) doc = getDocument(range) || document;
 
   // check common ancestor container for `nodeName`
@@ -40,17 +38,14 @@ function unwrap (range, nodeName, root, doc) {
   if (node) {
     debug('found %o common ancestor element: %o', nodeName, node);
 
-    var info = saveRange.save(range, doc);
+    info = saveRange.save(range, doc);
 
-    var parent = node.parentNode;
-    index = toArray(parent.childNodes).indexOf(node);
-
-    var outer = unwrapNode(node, parent, doc);
+    var outer = unwrapNode(node, null, doc);
 
     range = saveRange.load(info, range.commonAncestorContainer);
   }
 
-  var info = saveRange.save(range, doc);
+  info = saveRange.save(range, doc);
 
   // check inner nodes
   var fragment = range.extractContents();

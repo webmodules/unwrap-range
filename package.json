@@ -35,7 +35,6 @@
     "range-insert-node": "0.0.2",
     "range-normalize": "0.0.4",
     "save-range": "0.0.2",
-    "to-array": "~0.1.4",
     "unwrap-node": "0.0.1",
     "wrap-range": "0.0.2"
   },
