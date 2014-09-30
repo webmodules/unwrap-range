@@ -29,7 +29,7 @@
   "dependencies": {
     "component-closest": "~0.1.4",
     "component-query": "0.0.3",
-    "debug": "~1.0.4",
+    "debug": "~2.0.0",
     "find-within": "0.0.1",
     "get-document": "~0.1.1",
     "range-insert-node": "0.0.2",
