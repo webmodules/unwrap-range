@@ -51,11 +51,16 @@ function unwrap (range, nodeName, root, doc) {
     if (node) {
       debug('found %o common ancestor element: %o', nodeName, node);
 
+      // unwrap the common ancestor element, saving the Range state
+      // and restoring it afterwards
       info = saveRange.save(range, doc);
-
       var outer = unwrapNode(node, null, doc);
-
       range = saveRange.load(info, range.commonAncestorContainer);
+
+      // at this point, we need to save down the Range state *again*.
+      // This is somewhat a quick-fix, and more optimized logic could
+      // probably be implemented
+      info = saveRange.save(range, doc);
 
       // now re-wrap left-hand side, if necessary
       var left = outer.cloneRange();
@@ -72,6 +77,9 @@ function unwrap (range, nodeName, root, doc) {
         debug('re-wrapping right-hand side with new %o node', nodeName);
         wrapRange(right, nodeName, doc);
       }
+
+      // restore the Range at this point
+      range = saveRange.load(info, range.commonAncestorContainer);
     }
 
     info = saveRange.save(range, doc);
