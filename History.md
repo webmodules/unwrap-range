@@ -1,4 +1,12 @@
 
+1.0.0 / 2014-10-01
+==================
+
+ * add .gitignore file
+ * refactor to use a block iterating approach
+ * package: update "debug" to v2.0.0
+ * bumping to v1.0.0 for better defined semver behavior
+
 0.0.2 / 2014-09-10
 ==================
 
