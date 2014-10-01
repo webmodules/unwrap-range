@@ -1,6 +1,6 @@
 {
   "name": "unwrap-range",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Removes the specified `nodeName` from within or surrounding the given Range",
   "main": "index.js",
   "scripts": {

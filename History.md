@@ -1,4 +1,11 @@
 
+1.0.1 / 2014-10-01
+==================
+
+ * index: save and restore the Range state when re-wrapping left and right hand sides
+ * index: use "range-extract-contents" module
+ * package: update "zuul" to v1.11.0
+
 1.0.0 / 2014-10-01
 ==================
 
