@@ -223,9 +223,7 @@ describe('unwrap-range', function () {
     // test that the Range is properly set up
     assert.equal('hello', range.toString());
 
-    console.log(div.innerHTML);
     unwrap(range, 'em');
-    console.log(div.innerHTML);
 
     // test that there's no more <b> element in the <div>
     assert.equal('<p><strong>hello</strong></p>', div.innerHTML);
