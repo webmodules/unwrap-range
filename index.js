@@ -6,6 +6,7 @@
 var contains = require('node-contains');
 var getDocument = require('get-document');
 var unwrapNode = require('unwrap-node');
+var extractContents = require('range-extract-contents');
 var insertNode = require('range-insert-node');
 var wrapRange = require('wrap-range');
 var closest = require('component-closest');
@@ -75,7 +76,7 @@ function unwrap (range, nodeName, root, doc) {
 
     info = saveRange.save(range, doc);
 
-    var fragment = workingRange.extractContents();
+    var fragment = extractContents(workingRange);
     var nodes = query.all(nodeName, fragment);
 
     debug('%o %o elements to "unwrap"', nodes.length, nodeName);
