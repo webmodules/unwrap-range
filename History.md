@@ -1,4 +1,11 @@
 
+1.0.2 / 2014-10-01
+==================
+
+ * index: use `range.toString()` to determine if the Range has "contents"
+ * package: update "save-range" to v1.0.0
+ * index: normalize() the sub-Ranges for each block
+
 1.0.1 / 2014-10-01
 ==================
 
