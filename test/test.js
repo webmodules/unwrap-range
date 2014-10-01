@@ -211,4 +211,27 @@ describe('unwrap-range', function () {
     assert.equal('lowor', range.toString());
   });
 
+  it('should unwrap a Range nested inside another inline element', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><em><strong>hello</strong></em></p>';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild.firstChild, 0);
+    range.setEnd(div.firstChild.firstChild.firstChild.firstChild, 5);
+
+    // test that the Range is properly set up
+    assert.equal('hello', range.toString());
+
+    console.log(div.innerHTML);
+    unwrap(range, 'em');
+    console.log(div.innerHTML);
+
+    // test that there's no more <b> element in the <div>
+    assert.equal('<p><strong>hello</strong></p>', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('hello', range.toString());
+  });
+
 });

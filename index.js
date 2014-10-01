@@ -66,7 +66,7 @@ function unwrap (range, nodeName, root, doc) {
       // now re-wrap left-hand side, if necessary
       var left = outer.cloneRange();
       left.setEnd(range.startContainer, range.startOffset);
-      if (!left.collapsed) {
+      if (left.toString()) {
         debug('re-wrapping left-hand side with new %o node', nodeName);
         wrapRange(left, nodeName, doc);
       }
@@ -74,7 +74,7 @@ function unwrap (range, nodeName, root, doc) {
       // now re-wrap right-hand side, if necessary
       var right = outer.cloneRange();
       right.setStart(range.endContainer, range.endOffset);
-      if (!right.collapsed) {
+      if (right.toString()) {
         debug('re-wrapping right-hand side with new %o node', nodeName);
         wrapRange(right, nodeName, doc);
       }
