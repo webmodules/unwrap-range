@@ -190,4 +190,25 @@ describe('unwrap-range', function () {
     assert.equal('rl', range.toString());
   });
 
+  it('should unwrap a Range spanning across block elements', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><b>hello</b></p><p><b>world</b></p>';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild, 3);
+    range.setEnd(div.lastChild.firstChild.firstChild, 3);
+
+    // test that the Range is properly set up
+    assert.equal('lowor', range.toString());
+
+    unwrap(range, 'b');
+
+    // test that there's no more <b> element in the <div>
+    assert.equal('<p><b>hel</b>lo</p><p>wor<b>ld</b></p>', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('lowor', range.toString());
+  });
+
 });

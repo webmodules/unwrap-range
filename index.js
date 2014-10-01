@@ -45,6 +45,7 @@ function unwrap (range, nodeName, root, doc) {
   var prevBlock;
 
   function doRange () {
+    normalize(workingRange);
     debug('doRange() %s', workingRange.toString());
 
     var node = closest(workingRange.commonAncestorContainer, nodeName, true, root);
