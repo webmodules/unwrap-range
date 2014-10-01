@@ -37,7 +37,7 @@
     "range-extract-contents": "~1.0.0",
     "range-insert-node": "~1.0.1",
     "range-normalize": "~1.0.0",
-    "save-range": "0.0.2",
+    "save-range": "~1.0.0",
     "unwrap-node": "0.0.1",
     "wrap-range": "~1.0.0"
   },
