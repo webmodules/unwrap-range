@@ -126,7 +126,6 @@ describe('unwrap-range', function () {
     assert.equal('hello worl', range.toString());
   });
 
-  /*
   it('should unwrap a Range selecting the first 2 chars within a B element', function () {
     div = document.createElement('div');
     div.innerHTML = '<b>hello worl</b>d';
@@ -143,6 +142,9 @@ describe('unwrap-range', function () {
 
     // test that there's no more <b> element in the <div>
     assert.equal('he<b>llo worl</b>d', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('he', range.toString());
   });
 
   it('should unwrap a Range selecting the middle 2 chars within a B element', function () {
@@ -161,6 +163,9 @@ describe('unwrap-range', function () {
 
     // test that there's no more <b> element in the <div>
     assert.equal('<b>he</b>ll<b>o worl</b>d', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('ll', range.toString());
   });
 
   it('should unwrap a Range selecting the last 2 chars within a B element', function () {
@@ -180,7 +185,9 @@ describe('unwrap-range', function () {
 
     // test that there's no more <b> element in the <div>
     assert.equal('<b>hello wo</b>rld', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('rl', range.toString());
   });
-  */
 
 });

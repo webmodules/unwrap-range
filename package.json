@@ -27,16 +27,18 @@
   },
   "homepage": "https://github.com/webmodules/unwrap-range",
   "dependencies": {
+    "block-elements": "~1.0.0",
     "component-closest": "~0.1.4",
     "component-query": "0.0.3",
     "debug": "~2.0.0",
-    "find-within": "0.0.1",
+    "dom-iterator": "~0.3.0",
     "get-document": "~0.1.1",
-    "range-insert-node": "0.0.2",
-    "range-normalize": "0.0.4",
+    "node-contains": "~1.0.0",
+    "range-insert-node": "~1.0.1",
+    "range-normalize": "~1.0.0",
     "save-range": "0.0.2",
     "unwrap-node": "0.0.1",
-    "wrap-range": "0.0.2"
+    "wrap-range": "~1.0.0"
   },
   "devDependencies": {
     "zuul": "~1.10.2"
