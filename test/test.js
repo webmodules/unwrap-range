@@ -232,4 +232,33 @@ describe('unwrap-range', function () {
     assert.equal('hello', range.toString());
   });
 
+  it('should move cursor outside of I element when at ending boundary', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><i><b>hello</b></i></p>';
+    div.setAttribute('contenteditable', 'true');
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild.firstChild, 5);
+    range.setEnd(div.firstChild.firstChild.firstChild.firstChild, 5);
+
+    // test that the Range is properly set up
+    assert(range.collapsed);
+
+    unwrap(range, 'i');
+
+    // test that the I node is now within the B node
+    //assert.equal('<p><b><i>hello</i></b></p>', div.innerHTML);
+
+    // test that the Range is now outside the I node
+    //assert(range.collapsed);
+
+    // set the Range to the current selection, so that "createLink" will use it
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    document.execCommand('createLink', false, 'test');
+  });
+
 });

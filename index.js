@@ -33,22 +33,20 @@ module.exports = unwrap;
  */
 
 function unwrap (range, nodeName, root, doc) {
-  var info;
   if (!doc) doc = getDocument(range) || document;
 
-  var info;
+  var info, node, prevBlock;
   var next = range.startContainer;
   var end = range.endContainer;
   var iterator = domIterator(next).revisit(false);
   var originalRange = range.cloneRange();
   var workingRange = range.cloneRange();
-  var prevBlock;
 
   function doRange () {
     normalize(workingRange);
     debug('doRange() %s', workingRange.toString());
 
-    var node = closest(workingRange.commonAncestorContainer, nodeName, true, root);
+    node = closest(workingRange.commonAncestorContainer, nodeName, true, root);
     if (node) {
       debug('found %o common ancestor element: %o', nodeName, node);
 
@@ -97,28 +95,53 @@ function unwrap (range, nodeName, root, doc) {
     range = saveRange.load(info, range.commonAncestorContainer);
   }
 
-  while (next) {
-    var block = closest(next, blockSel, true);
+  if (range.collapsed) {
+    // for a `collapsed` range, we must check if the current Range is within
+    // a `nodeName` DOM element.
+    // If no, do nothing.
+    // If yes, then we need to unwrap and re-wrap the DOM element such that it
+    // gets moved to the top of the DOM stack, and then the cursor needs to go
+    // right beside it selecting a 0-width space TextNode.
+    // So: <i><b>test|</b></i>  →  unwrap I  →  <b><i>test</i>|</b>
+    debug('unwrapping collapsed Range');
+    node = closest(range.commonAncestorContainer, nodeName, true, root);
+    if (node) {
+      debug('found parent %o node within collapsed Range', nodeName);
+      var oldRange = unwrapNode(node, null, doc);
+      var els = wrapRange(oldRange, nodeName, doc);
 
-    if (prevBlock && prevBlock !== block) {
-      debug('found block boundary point for %o!', prevBlock);
-      workingRange.setEndAfter(prevBlock);
+      // a 0-width space text node is required, otherwise the browser will
+      // simply continue to type into the old parent node.
+      // TODO: handle before, and middle of word scenarios
+      var t = doc.createTextNode('\u200B');
+      els[0].parentNode.appendChild(t);
+      range.setStartBefore(t);
+      range.setEndAfter(t);
+    }
+  } else {
+    while (next) {
+      var block = closest(next, blockSel, true);
 
-      doRange();
+      if (prevBlock && prevBlock !== block) {
+        debug('found block boundary point for %o!', prevBlock);
+        workingRange.setEndAfter(prevBlock);
 
-      // now we clone the original range again, since it has the
-      // "end boundary" set up the way to need it still. But reset the
-      // "start boundary" to point to the beginning of this new block
-      workingRange = originalRange.cloneRange();
-      workingRange.setStartBefore(block);
+        doRange();
+
+        // now we clone the original range again, since it has the
+        // "end boundary" set up the way to need it still. But reset the
+        // "start boundary" to point to the beginning of this new block
+        workingRange = originalRange.cloneRange();
+        workingRange.setStartBefore(block);
+      }
+
+      prevBlock = block;
+      if (contains(end, next)) break;
+      next = iterator.next(3 /* Node.TEXT_NODE */);
     }
 
-    prevBlock = block;
-    if (contains(end, next)) break;
-    next = iterator.next(3 /* Node.TEXT_NODE */);
+    doRange();
+
+    normalize(range);
   }
-
-  doRange();
-
-  normalize(range);
 }
