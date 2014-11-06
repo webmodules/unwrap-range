@@ -1,4 +1,9 @@
 
+1.0.4 / 2014-11-06
+==================
+
+ * test: use the "delete" command for collapsed range test
+
 1.0.3 / 2014-11-06
 ==================
 
