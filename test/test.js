@@ -248,17 +248,16 @@ describe('unwrap-range', function () {
     unwrap(range, 'i');
 
     // test that the I node is now within the B node
-    //assert.equal('<p><b><i>hello</i></b></p>', div.innerHTML);
-
-    // test that the Range is now outside the I node
-    //assert(range.collapsed);
+    assert.equal('<p><b><i>hello</i>\u200B</b></p>', div.innerHTML);
 
     // set the Range to the current selection, so that "createLink" will use it
     var sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
 
-    document.execCommand('createLink', false, 'test');
+    document.execCommand('delete', false, 'test');
+    assert.equal('<p><b><i>hello</i></b></p>', div.innerHTML);
+    console.log(JSON.stringify(div.innerHTML));
   });
 
 });
