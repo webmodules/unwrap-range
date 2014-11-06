@@ -1,4 +1,9 @@
 
+1.0.3 / 2014-11-06
+==================
+
+ * index: initial take a handling `collapsed` Ranges
+
 1.0.2 / 2014-10-01
 ==================
 
