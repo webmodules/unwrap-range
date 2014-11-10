@@ -103,6 +103,8 @@ function unwrap (range, nodeName, root, doc) {
     // gets moved to the top of the DOM stack, and then the cursor needs to go
     // right beside it selecting a 0-width space TextNode.
     // So: <i><b>test|</b></i>  →  unwrap I  →  <b><i>test</i>|</b>
+    //     <i><b>|test</b></i>  →  unwrap I  →  <b>|<i>test</i></b>
+    //     <i><b>te|st</b></i>  →  unwrap I  →  <b><i>te</i>|<i>st</i></b>
     debug('unwrapping collapsed Range');
     node = closest(range.commonAncestorContainer, nodeName, true, root);
     if (node) {
