@@ -250,7 +250,7 @@ describe('unwrap-range', function () {
     // test that the I node is now within the B node
     assert.equal('<p><b><i>hello</i>\u200B</b></p>', div.innerHTML);
 
-    // set the Range to the current selection, so that "createLink" will use it
+    // set the Range to the current selection, so that "delete" will use it
     var sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
