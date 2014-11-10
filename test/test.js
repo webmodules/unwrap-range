@@ -257,7 +257,6 @@ describe('unwrap-range', function () {
 
     document.execCommand('delete', false, 'test');
     assert.equal('<p><b><i>hello</i></b></p>', div.innerHTML);
-    console.log(JSON.stringify(div.innerHTML));
   });
 
 });
