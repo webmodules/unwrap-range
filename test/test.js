@@ -52,7 +52,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('hello world', div.innerHTML);
 
     // test that the Range is still intact
@@ -68,7 +68,7 @@ describe('unwrap-range', function () {
     div.innerHTML = 'h<b>e</b>l<i>l</i>o <b>w</b>or<i>l</i>d';
     document.body.appendChild(div);
 
-    // select all the inner contents of the <div>
+    // select all the inner contents of the DIV
     var range = document.createRange();
     range.setStart(div.firstChild, 0);
     range.setEnd(div.lastChild, div.lastChild.nodeValue.length);
@@ -76,7 +76,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> elements in the <div>
+    // test that there's no more B elements in the DIV
     assert.equal('hel<i>l</i>o wor<i>l</i>d', div.innerHTML);
 
     // test that the Range is still intact
@@ -92,7 +92,7 @@ describe('unwrap-range', function () {
     div.innerHTML = 'he<b>ll</b>o';
     document.body.appendChild(div);
 
-    // select the first "e", and the first "l" inside the <b>
+    // select the first "e", and the first "l" inside the B node
     var range = document.createRange();
     range.setStart(div.firstChild, 1);
     range.setEnd(div.childNodes[1].firstChild, 1);
@@ -100,7 +100,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's a <b> only around the second "l"
+    // test that there's a B node only around the second "l"
     assert.equal('hel<b>l</b>o', div.innerHTML);
 
     // test that the Range is still intact
@@ -119,7 +119,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('hello world', div.innerHTML);
 
     // test that the Range is still intact
@@ -140,7 +140,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('he<b>llo worl</b>d', div.innerHTML);
 
     // test that the Range is still selecting the same text
@@ -161,7 +161,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('<b>he</b>ll<b>o worl</b>d', div.innerHTML);
 
     // test that the Range is still selecting the same text
@@ -183,7 +183,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('<b>hello wo</b>rld', div.innerHTML);
 
     // test that the Range is still selecting the same text
@@ -204,7 +204,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'b');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more B element in the DIV
     assert.equal('<p><b>hel</b>lo</p><p>wor<b>ld</b></p>', div.innerHTML);
 
     // test that the Range is still selecting the same text
