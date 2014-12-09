@@ -225,7 +225,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'em');
 
-    // test that there's no more <b> element in the <div>
+    // test that there's no more EM element in the DIV
     assert.equal('<p><strong>hello</strong></p>', div.innerHTML);
 
     // test that the Range is still selecting the same text
