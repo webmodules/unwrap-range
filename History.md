@@ -1,4 +1,12 @@
 
+1.0.5 / 2014-12-09
+==================
+
+  * treat LI elements as block-level elements
+  * index: add JSDoc comment for `doc` optional argument
+  * index: adjust comment to have beginning and middle case examples
+  * test: be consistent with the uppercasing of DOM element names in comments
+
 1.0.4 / 2014-11-06
 ==================
 
