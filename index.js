@@ -29,6 +29,7 @@ module.exports = unwrap;
  * @param {Range} range - DOM range to "unwrap"
  * @param {String} nodeName - Selector to use to determine which nodes to "unwrap"
  * @param {Element} [root] - Optional `root` DOM element to stop traversing the parents for
+ * @param {Document} [doc] - Optional `Document` instance to use
  * @public
  */
 
