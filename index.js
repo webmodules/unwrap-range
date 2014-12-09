@@ -14,7 +14,7 @@ var query = require('component-query');
 var saveRange = require('save-range');
 var domIterator = require('dom-iterator');
 var normalize = require('range-normalize');
-var blockSel = require('block-elements').join(', ');
+var blockSel = ['li'].concat(require('block-elements')).join(', ');
 var debug = require('debug')('unwrap-range');
 
 /**

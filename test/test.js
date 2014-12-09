@@ -232,6 +232,27 @@ describe('unwrap-range', function () {
     assert.equal('hello', range.toString());
   });
 
+  it('should unwrap a Range that crosses multiple LI elements', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<ol><li>on<strong>e</strong></li><li><strong>tw</strong>o</li></ol>';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.childNodes[1].firstChild, 0);
+    range.setEnd(div.firstChild.lastChild.firstChild.firstChild, 2);
+
+    // test that the Range is properly set up
+    assert.equal('etw', range.toString());
+
+    unwrap(range, 'strong');
+
+    // test that there's no more STRONG elements in the DIV
+    assert.equal('<ol><li>one</li><li>two</li></ol>', div.innerHTML);
+
+    // test that the Range is still selecting the same text
+    assert.equal('etw', range.toString());
+  });
+
   it('should move cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i><b>hello</b></i></p>';
