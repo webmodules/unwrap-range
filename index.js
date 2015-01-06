@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 
-var contains = require('node-contains');
 var getDocument = require('get-document');
 var unwrapNode = require('unwrap-node');
 var extractContents = require('range-extract-contents');
@@ -12,9 +11,12 @@ var wrapRange = require('wrap-range');
 var closest = require('component-closest');
 var query = require('component-query');
 var saveRange = require('save-range');
-var domIterator = require('dom-iterator');
+var RangeIterator = require('range-iterator');
 var normalize = require('range-normalize');
+
+// create a CSS selector string from the "block elements" array
 var blockSel = ['li'].concat(require('block-elements')).join(', ');
+
 var debug = require('debug')('unwrap-range');
 
 /**
@@ -36,12 +38,7 @@ module.exports = unwrap;
 function unwrap (range, nodeName, root, doc) {
   if (!doc) doc = getDocument(range) || document;
 
-  var info, node, prevBlock;
-  var next = range.startContainer;
-  var end = range.endContainer;
-  var iterator = domIterator(next).revisit(false);
-  var originalRange = range.cloneRange();
-  var workingRange = range.cloneRange();
+  var info, node, prevBlock, next;
 
   function doRange () {
     normalize(workingRange);
@@ -122,7 +119,13 @@ function unwrap (range, nodeName, root, doc) {
       range.setEndAfter(t);
     }
   } else {
-    while (next) {
+    var originalRange = range.cloneRange();
+    var workingRange = range.cloneRange();
+    var iterator = new RangeIterator(range)
+      .revisit(false)
+      .select(3 /* TEXT_NODE */);
+
+    while (next = iterator.next()) {
       var block = closest(next, blockSel, true);
 
       if (prevBlock && prevBlock !== block) {
@@ -139,8 +142,6 @@ function unwrap (range, nodeName, root, doc) {
       }
 
       prevBlock = block;
-      if (contains(end, next)) break;
-      next = iterator.next(3 /* Node.TEXT_NODE */);
     }
 
     doRange();
