@@ -31,7 +31,7 @@
     "component-closest": "~0.1.4",
     "component-query": "0.0.3",
     "debug": "~2.0.0",
-    "get-document": "~0.1.1",
+    "get-document": "1",
     "range-extract-contents": "~1.0.0",
     "range-insert-node": "~1.0.1",
     "range-iterator": "~1.0.0",
