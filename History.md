@@ -1,4 +1,13 @@
 
+1.1.0 / 2015-02-03
+==================
+
+  * package: update dependencies
+  * package: allow any "zuul" v1
+  * package: allow any "debug" v2
+  * package: update "get-document" to v1
+  * index: convert to using "range-iterator"
+
 1.0.5 / 2014-12-09
 ==================
 
