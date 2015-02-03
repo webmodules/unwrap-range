@@ -41,6 +41,6 @@
     "wrap-range": "~1.0.0"
   },
   "devDependencies": {
-    "zuul": "~1.11.0"
+    "zuul": "1"
   }
 }
