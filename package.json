@@ -32,13 +32,13 @@
     "component-query": "0.0.3",
     "debug": "2",
     "get-document": "1",
-    "range-extract-contents": "~1.0.0",
-    "range-insert-node": "~1.0.1",
-    "range-iterator": "~1.0.0",
-    "range-normalize": "~1.0.0",
-    "save-range": "~1.0.0",
+    "range-extract-contents": "~1.0.1",
+    "range-insert-node": "~1.0.3",
+    "range-iterator": "~1.0.1",
+    "range-normalize": "~1.1.0",
+    "save-range": "~1.1.0",
     "unwrap-node": "0.0.1",
-    "wrap-range": "~1.0.0"
+    "wrap-range": "~1.1.0"
   },
   "devDependencies": {
     "zuul": "1"
