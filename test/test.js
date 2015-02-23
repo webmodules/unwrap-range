@@ -253,6 +253,31 @@ describe('unwrap-range', function () {
     assert.equal('etw', range.toString());
   });
 
+  it('should unwrap a Range that crosses multiple P elements', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><strong>aa</strong></p><p><strong>b</strong></p>';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild, 0);
+    range.setEnd(div.lastChild.firstChild.firstChild, 1);
+
+    // test that the Range is properly set up
+    assert.equal('aab', range.toString());
+
+    unwrap(range, 'strong');
+
+    // test that there's no more STRONG elements in the DIV
+    assert.equal('<p>aa</p><p>b</p>', div.innerHTML);
+
+    // test that the Range is still intact
+    assert.equal('aab', range.toString());
+    assert(range.startContainer === div.firstChild.firstChild);
+    assert(range.startOffset === 0);
+    assert(range.endContainer === div.lastChild.firstChild);
+    assert(range.endOffset === 1);
+  });
+
   it('should move cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i><b>hello</b></i></p>';
