@@ -1,4 +1,11 @@
 
+1.1.1 / 2015-02-23
+==================
+
+  * push the working ranges into a `ranges` array, and process them after the RangeIterator is complete
+  * test: another multiple-block unwrap test
+  * test: add a test case spaning across 2 P elements
+
 1.1.0 / 2015-02-03
 ==================
 
