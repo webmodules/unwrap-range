@@ -280,33 +280,36 @@ describe('unwrap-range', function () {
 
   it('should unwrap a Range that crosses 4 P elements', function () {
     div = document.createElement('div');
-    div.innerHTML = '<p><strong>asdf</strong></p>' +
-                    '<p><strong>asdf</strong></p>' +
-                    '<p><strong>asdf</strong></p>' +
-                    '<p><strong>asdf</strong></p>';
     document.body.appendChild(div);
 
-    var range = document.createRange();
-    range.setStart(div.firstChild.firstChild.firstChild, 0);
-    range.setEnd(div.lastChild.firstChild.firstChild, 4);
+    for (var i = 0; i < 20; i++) {
+      div.innerHTML = '<p><strong>1</strong></p>' +
+                      '<p><strong>2</strong></p>' +
+                      '<p><strong>3</strong></p>' +
+                      '<p><strong>4</strong></p>';
 
-    // test that the Range is properly set up
-    assert.equal('asdfasdfasdfasdf', range.toString());
+      var range = document.createRange();
+      range.setStart(div.firstChild.firstChild.firstChild, 0);
+      range.setEnd(div.lastChild.firstChild.firstChild, 1);
 
-    unwrap(range, 'strong');
+      // test that the Range is properly set up
+      assert.equal('1234', range.toString());
 
-    // test that there's no more STRONG elements in the DIV
-    assert.equal('<p>asdf</p>' +
-                 '<p>asdf</p>' +
-                 '<p>asdf</p>' +
-                 '<p>asdf</p>', div.innerHTML);
+      unwrap(range, 'strong');
 
-    // test that the Range is still intact
-    assert.equal('asdfasdfasdfasdf', range.toString());
-    assert(range.startContainer === div.firstChild.firstChild);
-    assert(range.startOffset === 0);
-    assert(range.endContainer === div.lastChild.firstChild);
-    assert(range.endOffset === 4);
+      // test that there's no more STRONG elements in the DIV
+      assert.equal('<p>1</p>' +
+                   '<p>2</p>' +
+                   '<p>3</p>' +
+                   '<p>4</p>', div.innerHTML);
+
+      // test that the Range is still intact
+      assert.equal('1234', range.toString());
+      assert(range.startContainer === div.firstChild.firstChild);
+      assert(range.startOffset === 0);
+      assert(range.endContainer === div.lastChild.firstChild);
+      assert(range.endOffset === 1);
+    }
   });
 
   it('should move cursor outside of I element when at ending boundary', function () {

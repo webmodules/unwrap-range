@@ -40,8 +40,7 @@ function unwrap (range, nodeName, root, doc) {
 
   var info, node, prevBlock, next;
 
-  function doRange () {
-    normalize(workingRange);
+  function doRange (workingRange) {
     debug('doRange() %s', workingRange.toString());
 
     node = closest(workingRange.commonAncestorContainer, nodeName, true, root);
@@ -123,16 +122,17 @@ function unwrap (range, nodeName, root, doc) {
     var workingRange = range.cloneRange();
     var iterator = new RangeIterator(range)
       .revisit(false)
-      .select(3 /* TEXT_NODE */);
+      .select(3 /* text nodes */);
 
+    var ranges = [];
     while (next = iterator.next()) {
-      var block = closest(next, blockSel, true);
+      var block = closest(next, blockSel, true, root);
 
       if (prevBlock && prevBlock !== block) {
         debug('found block boundary point for %o!', prevBlock);
         workingRange.setEndAfter(prevBlock);
 
-        doRange();
+        ranges.push(normalize(workingRange));
 
         // now we clone the original range again, since it has the
         // "end boundary" set up the way to need it still. But reset the
@@ -143,8 +143,11 @@ function unwrap (range, nodeName, root, doc) {
 
       prevBlock = block;
     }
+    ranges.push(normalize(workingRange));
 
-    doRange();
+    for (var i = 0; i < ranges.length; i++) {
+      doRange(ranges[i]);
+    }
 
     normalize(range);
   }
