@@ -278,6 +278,37 @@ describe('unwrap-range', function () {
     assert(range.endOffset === 1);
   });
 
+  it('should unwrap a Range that crosses 4 P elements', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><strong>asdf</strong></p>' +
+                    '<p><strong>asdf</strong></p>' +
+                    '<p><strong>asdf</strong></p>' +
+                    '<p><strong>asdf</strong></p>';
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild, 0);
+    range.setEnd(div.lastChild.firstChild.firstChild, 4);
+
+    // test that the Range is properly set up
+    assert.equal('asdfasdfasdfasdf', range.toString());
+
+    unwrap(range, 'strong');
+
+    // test that there's no more STRONG elements in the DIV
+    assert.equal('<p>asdf</p>' +
+                 '<p>asdf</p>' +
+                 '<p>asdf</p>' +
+                 '<p>asdf</p>', div.innerHTML);
+
+    // test that the Range is still intact
+    assert.equal('asdfasdfasdfasdf', range.toString());
+    assert(range.startContainer === div.firstChild.firstChild);
+    assert(range.startOffset === 0);
+    assert(range.endContainer === div.lastChild.firstChild);
+    assert(range.endOffset === 4);
+  });
+
   it('should move cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i><b>hello</b></i></p>';
