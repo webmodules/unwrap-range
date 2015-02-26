@@ -122,7 +122,11 @@ function unwrap (range, nodeName, root, doc) {
     var workingRange = range.cloneRange();
     var iterator = new RangeIterator(range)
       .revisit(false)
-      .select(3 /* text nodes */);
+      .select(3 /* text nodes */)
+      .select(function (node) {
+        // nodes with no child nodes
+        return node.childNodes.length === 0;
+      });
 
     var ranges = [];
     while (next = iterator.next()) {
