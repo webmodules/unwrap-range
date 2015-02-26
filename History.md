@@ -1,4 +1,10 @@
 
+1.1.2 / 2015-02-26
+==================
+
+  * index: iterator over childless nodes as well
+  * test: add failing "void elements" BR test case
+
 1.1.1 / 2015-02-23
 ==================
 
