@@ -312,6 +312,41 @@ describe('unwrap-range', function () {
     }
   });
 
+  it('should unwrap a Range that crosses 4 P elements with a BR inside one', function () {
+    div = document.createElement('div');
+    document.body.appendChild(div);
+
+    for (var i = 0; i < 20; i++) {
+      div.innerHTML = '<p><em>1</em></p>' +
+                      '<p><em><br></em></p>' +
+                      '<p><em>3</em></p>' +
+                      '<p><em>4</em></p>';
+
+      var range = document.createRange();
+      range.setStart(div.firstChild.firstChild.firstChild, 0);
+      range.setEnd(div.lastChild.firstChild.firstChild, 1);
+
+      // test that the Range is properly set up
+      assert.equal('134', range.toString());
+
+      unwrap(range, 'em');
+
+      // test that there's no more EM elements in the DIV
+      console.log(div.innerHTML);
+      assert.equal('<p>1</p>' +
+                   '<p><br></p>' +
+                   '<p>3</p>' +
+                   '<p>4</p>', div.innerHTML);
+
+      // test that the Range is still intact
+      assert.equal('134', range.toString());
+      assert(range.startContainer === div.firstChild.firstChild);
+      assert(range.startOffset === 0);
+      assert(range.endContainer === div.lastChild.firstChild);
+      assert(range.endOffset === 1);
+    }
+  });
+
   it('should move cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i><b>hello</b></i></p>';
