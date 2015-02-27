@@ -37,7 +37,7 @@
     "range-iterator": "~1.0.1",
     "range-normalize": "~1.1.0",
     "save-range": "~1.1.0",
-    "unwrap-node": "0.0.1",
+    "unwrap-node": "~1.0.0",
     "wrap-range": "~1.1.0"
   },
   "devDependencies": {
