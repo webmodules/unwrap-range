@@ -348,7 +348,26 @@ describe('unwrap-range', function () {
 
   it('should move cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
-    div.innerHTML = '<p><i><b>hello</b></i></p>';
+    div.innerHTML = '<p><i>hello</i> world</p>';
+    div.setAttribute('contenteditable', 'true');
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild, 5);
+    range.setEnd(div.firstChild.firstChild.firstChild, 5);
+
+    // test that the Range is properly set up
+    assert(range.collapsed);
+
+    unwrap(range, 'i');
+
+    // test that the I node is now within the B node
+    assert.equal('<p><i>hello</i>\u200B world</p>', div.innerHTML);
+  });
+
+  it('should move cursor outside of I element when at ending boundary', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><i><b>hello</b></i> world</p>';
     div.setAttribute('contenteditable', 'true');
     document.body.appendChild(div);
 
@@ -362,15 +381,7 @@ describe('unwrap-range', function () {
     unwrap(range, 'i');
 
     // test that the I node is now within the B node
-    assert.equal('<p><b><i>hello</i>\u200B</b></p>', div.innerHTML);
-
-    // set the Range to the current selection, so that "delete" will use it
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    document.execCommand('delete', false, 'test');
-    assert.equal('<p><b><i>hello</i></b></p>', div.innerHTML);
+    assert.equal('<p><b><i>hello</i>\u200B</b> world</p>', div.innerHTML);
   });
 
 });

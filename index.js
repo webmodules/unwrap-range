@@ -113,7 +113,7 @@ function unwrap (range, nodeName, root, doc) {
       // simply continue to type into the old parent node.
       // TODO: handle before, and middle of word scenarios
       var t = doc.createTextNode('\u200B');
-      els[0].parentNode.appendChild(t);
+      insertAfter(t, els[els.length - 1]);
       range.setStartBefore(t);
       range.setEndAfter(t);
     }
@@ -154,5 +154,15 @@ function unwrap (range, nodeName, root, doc) {
     }
 
     normalize(range);
+  }
+}
+
+function insertAfter(newElement, targetElement) {
+  var parent = targetElement.parentNode;
+
+  if (parent.lastChild === targetElement) {
+    parent.appendChild(newElement);
+  } else {
+    parent.insertBefore(newElement, targetElement.nextSibling);
   }
 }
