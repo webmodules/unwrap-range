@@ -332,7 +332,6 @@ describe('unwrap-range', function () {
       unwrap(range, 'em');
 
       // test that there's no more EM elements in the DIV
-      console.log(div.innerHTML);
       assert.equal('<p>1</p>' +
                    '<p><br></p>' +
                    '<p>3</p>' +
