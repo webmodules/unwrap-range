@@ -38,7 +38,7 @@
     "range-normalize": "~1.1.0",
     "save-range": "~1.1.0",
     "unwrap-node": "~1.0.0",
-    "wrap-range": "~1.1.0"
+    "wrap-range": "~2.0.0"
   },
   "devDependencies": {
     "zuul": "2"
