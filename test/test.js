@@ -362,7 +362,7 @@ describe('unwrap-range', function () {
     unwrap(range, 'i');
 
     // test that the I node is now within the B node
-    assert.equal('<p><i>hello</i>\u200B world</p>', div.innerHTML);
+    assert.equal('<p><i>hello</i><span class="zwsp">\u200B</span> world</p>', div.innerHTML);
   });
 
   it('should move cursor outside of I element when at ending boundary', function () {
@@ -381,7 +381,7 @@ describe('unwrap-range', function () {
     unwrap(range, 'i');
 
     // test that the I node is now within the B node
-    assert.equal('<p><b><i>hello</i>\u200B</b> world</p>', div.innerHTML);
+    assert.equal('<p><b><i>hello</i><span class="zwsp">\u200B</span></b> world</p>', div.innerHTML);
   });
 
 });

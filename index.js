@@ -112,10 +112,18 @@ function unwrap (range, nodeName, root, doc) {
       // a 0-width space text node is required, otherwise the browser will
       // simply continue to type into the old parent node.
       // TODO: handle before, and middle of word scenarios
-      var t = doc.createTextNode('\u200B');
-      insertAfter(t, els[els.length - 1]);
-      range.setStartBefore(t);
-      range.setEndAfter(t);
+      debug('inserting 0-width space TextNode after new %o element', els[0].nodeName);
+      var span = doc.createElement('span');
+      span.className = 'zwsp';
+      var text = doc.createTextNode('\u200B');
+      span.appendChild(text);
+      node.appendChild(span);
+
+      insertAfter(span, els[els.length - 1]);
+
+      var l = text.nodeValue.length;
+      range.setStart(text, l);
+      range.setEnd(text, l);
     }
   } else {
     var originalRange = range.cloneRange();
