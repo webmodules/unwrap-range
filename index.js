@@ -106,20 +106,50 @@ function unwrap (range, nodeName, root, doc) {
     node = closest(range.endContainer, nodeName, true, root);
     if (node) {
       debug('found parent %o node within collapsed Range', nodeName);
+
+      // first attempt to find any existing `.zwsp` span, and remove it
+      // so that it's not considered when checking if the `node` is "empty"
+      var span = closest(range.endContainer, '.zwsp', true, root);
+      if (span) span.parentNode.removeChild(span);
+
+      var isEmpty = !node.firstChild;
+
+      var parentNode = node.parentNode;
+      var nextSibling = node.nextSibling;
+      var previousSibling = node.previousSibling;
+
       var oldRange = unwrapNode(node, null, doc);
-      var els = wrapRange(oldRange, nodeName, doc);
 
-      // a 0-width space text node is required, otherwise the browser will
-      // simply continue to type into the old parent node.
-      // TODO: handle before, and middle of word scenarios
-      debug('inserting 0-width space TextNode after new %o element', els[0].nodeName);
-      var span = doc.createElement('span');
-      span.className = 'zwsp';
-      var text = doc.createTextNode('\u200B');
-      span.appendChild(text);
-      node.appendChild(span);
+      if (!span) {
+        span = doc.createElement('span');
+        span.className = 'zwsp';
+      }
+      var text = span.firstChild;
+      if (!text) {
+        text = doc.createTextNode('\u200B');
+        span.appendChild(text);
+      }
 
-      insertAfter(span, els[els.length - 1]);
+      if (!isEmpty) {
+        var els = wrapRange(oldRange, nodeName, doc);
+
+        // a 0-width space text node is required, otherwise the browser will
+        // simply continue to type into the old parent node.
+        // TODO: handle before, and middle of word scenarios
+        debug('inserting 0-width space TextNode after new %o element', els[0].nodeName);
+        node.appendChild(span);
+
+        insertAfter(span, els[els.length - 1]);
+      } else {
+        // empty
+        if (previousSibling) {
+          insertAfter(span, previousSibling);
+        } else if (nextSibling) {
+          parent.insertBefore(span, nextSibling);
+        } else {
+          parent.appendChild(span);
+        }
+      }
 
       var l = text.nodeValue.length;
       range.setStart(text, l);

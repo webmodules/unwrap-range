@@ -346,7 +346,28 @@ describe('unwrap-range', function () {
     }
   });
 
-  it('should move cursor outside of I element when at ending boundary', function () {
+  it('should unwrap a collapsed Range', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p>hello <i><span class="zwsp">\u200B</span></i> world</p>';
+    div.setAttribute('contenteditable', 'true');
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.childNodes[1].firstChild.firstChild, 1);
+    range.setEnd(div.firstChild.childNodes[1].firstChild.firstChild, 1);
+
+    // test that the Range is properly set up
+    assert(range.collapsed);
+
+    unwrap(range, 'i');
+
+    // test that the I node is now within the B node
+    assert.equal('<p>hello <span class="zwsp">\u200B</span> world</p>', div.innerHTML);
+
+    assert(range.collapsed);
+  });
+
+  it('should move collapsed cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i>hello</i> world</p>';
     div.setAttribute('contenteditable', 'true');
@@ -363,9 +384,11 @@ describe('unwrap-range', function () {
 
     // test that the I node is now within the B node
     assert.equal('<p><i>hello</i><span class="zwsp">\u200B</span> world</p>', div.innerHTML);
+
+    assert(range.collapsed);
   });
 
-  it('should move cursor outside of I element when at ending boundary', function () {
+  it('should move collapsed cursor outside of I→B element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i><b>hello</b></i> world</p>';
     div.setAttribute('contenteditable', 'true');
@@ -382,6 +405,8 @@ describe('unwrap-range', function () {
 
     // test that the I node is now within the B node
     assert.equal('<p><b><i>hello</i><span class="zwsp">\u200B</span></b> world</p>', div.innerHTML);
+
+    assert(range.collapsed);
   });
 
 });
