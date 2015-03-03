@@ -103,7 +103,7 @@ function unwrap (range, nodeName, root, doc) {
     //     <i><b>|test</b></i>  →  unwrap I  →  <b>|<i>test</i></b>
     //     <i><b>te|st</b></i>  →  unwrap I  →  <b><i>te</i>|<i>st</i></b>
     debug('unwrapping collapsed Range');
-    node = closest(range.commonAncestorContainer, nodeName, true, root);
+    node = closest(range.endContainer, nodeName, true, root);
     if (node) {
       debug('found parent %o node within collapsed Range', nodeName);
       var oldRange = unwrapNode(node, null, doc);
