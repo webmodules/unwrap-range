@@ -1,4 +1,15 @@
 
+2.0.0 / 2015-03-03
+==================
+
+  * index: insert the 0-width space into a `span.zwsp` node
+  * index: insert the 0wsp *after* the last inserted node
+  * index: use `endContainer` on collapsed ranges
+  * package: update "wrap-range" to v2.0.0
+  * package: allow any "zuul" v2
+  * package: update "unwrap-node" to v1.0.0
+  * test: remove `console.log()` call
+
 1.1.2 / 2015-02-26
 ==================
 
