@@ -12,6 +12,7 @@ var closest = require('component-closest');
 var query = require('component-query');
 var saveRange = require('save-range');
 var RangeIterator = require('range-iterator');
+var RangePosition = require('range-position');
 var normalize = require('range-normalize');
 
 // create a CSS selector string from the "block elements" array
@@ -118,6 +119,11 @@ function unwrap (range, nodeName, root, doc) {
       var nextSibling = node.nextSibling;
       var previousSibling = node.previousSibling;
 
+      var pos;
+      if (!isEmpty) {
+        pos = RangePosition(range, node);
+      }
+
       var oldRange = unwrapNode(node, null, doc);
 
       if (!span) {
@@ -132,14 +138,22 @@ function unwrap (range, nodeName, root, doc) {
 
       if (!isEmpty) {
         var els = wrapRange(oldRange, nodeName, doc);
+        var el = els[0];
 
         // a 0-width space text node is required, otherwise the browser will
         // simply continue to type into the old parent node.
-        // TODO: handle before, and middle of word scenarios
-        debug('inserting 0-width space TextNode after new %o element', els[0].nodeName);
-        node.appendChild(span);
+        debug('inserting 0-width space TextNode after new %o element', el.nodeName);
 
-        insertAfter(span, els[els.length - 1]);
+        if (pos === RangePosition.START) {
+          el.parentNode.insertBefore(span, el);
+        } else if (pos === RangePosition.MIDDLE) {
+          // TODO: handle middle of word scenarios
+        } else if (pos === RangePosition.END) {
+          insertAfter(span, el);
+        } else {
+          throw new Error('should not happen!');
+        }
+
       } else {
         // empty
         if (previousSibling) {
