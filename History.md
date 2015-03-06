@@ -1,4 +1,10 @@
 
+2.0.2 / 2015-03-05
+==================
+
+  * handle the "middle of word" scenario
+  * use "range-position" module to handle collapsed "beginning of Node" case
+
 2.0.1 / 2015-03-03
 ==================
 
