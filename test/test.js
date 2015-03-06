@@ -388,6 +388,27 @@ describe('unwrap-range', function () {
     assert(range.collapsed);
   });
 
+  it('should move collapsed cursor outside of I element when somewhere in the middle', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p><i>hello</i> world</p>';
+    div.setAttribute('contenteditable', 'true');
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild.firstChild, 3);
+    range.setEnd(div.firstChild.firstChild.firstChild, 3);
+
+    // test that the Range is properly set up
+    assert(range.collapsed);
+
+    unwrap(range, 'i');
+
+    // test that the I node is now within the B node
+    assert.equal('<p><i>hel</i><span class="zwsp">\u200B</span><i>lo</i> world</p>', div.innerHTML);
+
+    assert(range.collapsed);
+  });
+
   it('should move collapsed cursor outside of I element when at ending boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i>hello</i> world</p>';

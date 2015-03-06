@@ -13,6 +13,8 @@ var query = require('component-query');
 var saveRange = require('save-range');
 var RangeIterator = require('range-iterator');
 var RangePosition = require('range-position');
+var RangeAtIndex = require('range-at-index');
+var splitAtRange = require('split-at-range');
 var normalize = require('range-normalize');
 
 // create a CSS selector string from the "block elements" array
@@ -119,9 +121,10 @@ function unwrap (range, nodeName, root, doc) {
       var nextSibling = node.nextSibling;
       var previousSibling = node.previousSibling;
 
-      var pos;
+      var pos, offset;
       if (!isEmpty) {
         pos = RangePosition(range, node);
+        offset = range.endOffset;
       }
 
       var oldRange = unwrapNode(node, null, doc);
@@ -147,7 +150,29 @@ function unwrap (range, nodeName, root, doc) {
         if (pos === RangePosition.START) {
           el.parentNode.insertBefore(span, el);
         } else if (pos === RangePosition.MIDDLE) {
-          // TODO: handle middle of word scenarios
+          var r = RangeAtIndex(el, offset, offset);
+          var split = splitAtRange(el, r);
+
+          // grab the first child if it is the same nodeName as `el`
+          if (split[0].childNodes[0].nodeName === el.nodeName) {
+            split[0] = split[0].childNodes[0];
+          }
+          if (split[1].childNodes[0].nodeName === el.nodeName) {
+            split[1] = split[1].childNodes[0];
+          }
+
+          // clone the `el` root node, including attributes, for the "right side"
+          var other = el.cloneNode(false);
+
+          // for `el`, remove all child nodes, and transfer the contents
+          while (el.firstChild) el.removeChild(el.firstChild);
+          while (split[0].firstChild) el.appendChild(split[0].firstChild);
+
+          // for the `other` node, we have to insert the split[1] child nodes
+          while (split[1].firstChild) other.appendChild(split[1].firstChild);
+
+          insertAfter(other, el);
+          insertAfter(span, el);
         } else if (pos === RangePosition.END) {
           insertAfter(span, el);
         } else {
