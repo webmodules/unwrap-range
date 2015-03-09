@@ -35,7 +35,7 @@
     "range-at-index": "~1.0.3",
     "range-extract-contents": "~1.0.1",
     "range-insert-node": "~1.0.3",
-    "range-iterator": "~1.0.1",
+    "range-iterator": "~2.0.0",
     "range-normalize": "~1.1.1",
     "range-position": "~1.0.1",
     "save-range": "~1.1.0",

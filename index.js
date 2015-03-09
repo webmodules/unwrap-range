@@ -197,17 +197,14 @@ function unwrap (range, nodeName, root, doc) {
   } else {
     var originalRange = range.cloneRange();
     var workingRange = range.cloneRange();
-    var iterator = new RangeIterator(range)
-      .revisit(false)
-      .select(3 /* text nodes */)
-      .select(function (node) {
-        // nodes with no child nodes
-        return node.childNodes.length === 0;
-      });
+    var iterator = RangeIterator(range, function (node) {
+      // nodes with no child nodes
+      return node.childNodes.length === 0;
+    });
 
     var ranges = [];
-    while (next = iterator.next()) {
-      var block = closest(next, blockSel, true, root);
+    while (!(next = iterator.next()).done) {
+      var block = closest(next.value, blockSel, true, root);
 
       if (prevBlock && prevBlock !== block) {
         debug('found block boundary point for %o!', prevBlock);
