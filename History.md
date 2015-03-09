@@ -1,4 +1,11 @@
 
+2.0.3 / 2015-03-09
+==================
+
+  * update RangeIterator to v2 API
+  * package: update "wrap-range" to v2.0.2
+  * package: update "range-normalize" to v1.1.1
+
 2.0.2 / 2015-03-05
 ==================
 
