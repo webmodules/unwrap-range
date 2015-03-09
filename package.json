@@ -41,7 +41,7 @@
     "save-range": "~1.1.0",
     "split-at-range": "0.0.2",
     "unwrap-node": "~1.0.0",
-    "wrap-range": "~2.0.0"
+    "wrap-range": "~2.0.2"
   },
   "devDependencies": {
     "zuul": "2"
