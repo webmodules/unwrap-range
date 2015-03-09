@@ -32,7 +32,7 @@
     "component-query": "0.0.3",
     "debug": "2",
     "get-document": "1",
-    "range-at-index": "~1.0.3",
+    "range-at-index": "~1.0.4",
     "range-extract-contents": "~1.0.1",
     "range-insert-node": "~1.0.3",
     "range-iterator": "~2.0.0",
