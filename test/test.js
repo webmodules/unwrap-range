@@ -361,7 +361,7 @@ describe('unwrap-range', function () {
 
     unwrap(range, 'i');
 
-    // test that the I node is now within the B node
+    // test that the I node is now gone
     assert.equal('<p>hello <span class="zwsp">\u200B</span> world</p>', div.innerHTML);
 
     assert(range.collapsed);
