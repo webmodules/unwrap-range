@@ -38,7 +38,7 @@
     "range-iterator": "~2.0.0",
     "range-normalize": "~1.1.1",
     "range-position": "~1.0.1",
-    "save-range": "~1.1.0",
+    "save-range": "~1.1.1",
     "split-at-range": "0.0.2",
     "unwrap-node": "~1.0.0",
     "wrap-range": "~2.0.2"
