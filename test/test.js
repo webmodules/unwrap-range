@@ -367,6 +367,33 @@ describe('unwrap-range', function () {
     assert(range.collapsed);
   });
 
+  it('should unwrap a Range selecting the end of 2 different P nodes with text', function () {
+    div = document.createElement('div');
+    div.innerHTML = '<p>asfd</p>' +
+                    '<p><strong>asfd</strong></p>';
+    div.setAttribute('contenteditable', 'true');
+    document.body.appendChild(div);
+
+    var range = document.createRange();
+    range.setStart(div.firstChild.firstChild, 4);
+    range.setEnd(div.lastChild.firstChild.firstChild, 4);
+
+    // test that the Range is properly set up
+    assert.equal('asfd', range.toString());
+
+    unwrap(range, 'strong');
+
+    // test that the STRONG node is now gone
+    assert.equal('<p>asfd</p>' +
+                 '<p>asfd</p>', div.innerHTML);
+
+    assert.equal('asfd', range.toString());
+    assert(range.startContainer === div.firstChild.firstChild);
+    assert(range.startOffset === 4);
+    assert(range.endContainer === div.lastChild.firstChild);
+    assert(range.endOffset === 4);
+  });
+
   it('should move collapsed cursor outside of I element when at beginning boundary', function () {
     div = document.createElement('div');
     div.innerHTML = '<p><i>hello</i> world</p>';
