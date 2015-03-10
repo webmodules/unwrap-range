@@ -1,4 +1,13 @@
 
+2.0.4 / 2015-03-10
+==================
+
+  * use `%o` formatter to debug() call
+  * test: add another test case
+  * test: adjust comment
+  * package: update "save-range" to v1.1.1
+  * package: update "range-at-index" to v1.0.4
+
 2.0.3 / 2015-03-09
 ==================
 
