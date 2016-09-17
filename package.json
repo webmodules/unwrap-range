@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/webmodules/unwrap-range",
   "dependencies": {
-    "block-elements": "~1.0.0",
-    "component-closest": "~0.1.4",
+    "block-elements": "~1.1.0",
+    "component-closest": "~1.0.1",
     "component-query": "0.0.3",
     "debug": "2",
     "get-document": "1",
@@ -41,7 +41,7 @@
     "save-range": "~1.1.1",
     "split-at-range": "0.0.2",
     "unwrap-node": "~1.0.0",
-    "wrap-range": "~2.0.2"
+    "wrap-range": "~2.0.3"
   },
   "devDependencies": {
     "zuul": "2"
