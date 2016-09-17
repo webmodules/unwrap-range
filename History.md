@@ -1,3 +1,7 @@
+2.0.5 / 2016-09-17
+==================
+
+* [[`1f104807f0`](https://github.com/webmodules/unwrap-range/commit/1f104807f0)] - **package**: update deps (Nathan Rajlich)
 
 2.0.4 / 2015-03-10
 ==================
